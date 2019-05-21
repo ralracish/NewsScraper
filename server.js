@@ -27,25 +27,32 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/NewsScraper", { useNewUrlParser: true });
 
 // Routes
 
-// A GET route for scraping the echoJS website
+// A GET route for scraping the Huffington Post website
 app.get("/scrape", (req, res) => {
     // First, we grab the body of the html with axios
-    axios.get("http://www.echojs.com/").then(response => {
+    axios.get("https://www.huffpost.com/").then(response => {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         const $ = cheerio.load(response.data);
 
-        // Now, we grab every h2 within an article tag, and do the following:
-        $("article h2").each((i, element) => {
-            // Save an empty result object
+        // Now, we grab headline within an article tag, and do the following:
+        
+        $(".card--left").each((i, element) => {
+            //Save empty result object
             const result = {};
+            result.title = $(element).children(".card__content").children(".card__details").children(".card__headlines")
+                .children(".card__headline").children("a").children(".card__headline__text").text();
+            result.image = $(element).children(".card__content").children(".card__image__wrapper").children(".card__image").children("img").attr("src")
+            console.log(result)
+            result.link = $(element).children(".card__content").children(".card__details").children(".card__headlines")
+                .children(".card__headline").children("a").attr("href");
+            console.log(result)
 
-            // Add the text and href of every link, and save them as properties of the result object
-            result.title = $(element).children("a").text();
-            result.link = $(element).children("a").attr("href");
+            
+    
 
             // Create a new Article using the `result` object built from scraping
             db.Article.create(result)

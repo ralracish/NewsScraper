@@ -12,19 +12,17 @@ const ArticleSchema = new Schema({
         required: true
     },
     // `link` is required and of type String
-    link: {
+    image: {
         type: String,
         required: true
-    },
-
-    //'brief' is brief description of the article
-    brief: {
-        type: String,
-        required:true
     },
     // `note` is an object that stores a Note id
     // The ref property links the ObjectId to the Note model
     // This allows us to populate the Article with an associated Note
+    link: {
+        type: String,
+        required: true
+    },
     note: {
         type: Schema.Types.ObjectId,
         ref: "Note"
