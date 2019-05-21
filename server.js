@@ -46,14 +46,10 @@ app.get("/scrape", (req, res) => {
             result.title = $(element).children(".card__content").children(".card__details").children(".card__headlines")
                 .children(".card__headline").children("a").children(".card__headline__text").text();
             result.image = $(element).children(".card__content").children(".card__image__wrapper").children(".card__image").children("img").attr("src")
-            console.log(result)
             result.link = $(element).children(".card__content").children(".card__details").children(".card__headlines")
-                .children(".card__headline").children("a").attr("href");
-            console.log(result)
+                .children(".card__headline").children("a").attr("href")
 
             
-    
-
             // Create a new Article using the `result` object built from scraping
             db.Article.create(result)
                 .then(dbArticle => {
