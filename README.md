@@ -1,1 +1,3 @@
 # NewsScraper
+
+This Newscraper scrapes articles from the Huffington Post and saves them into a MongoD database. It uses mongoose, morgan, axios, cheerios, and express. It is a full stack application. Once the server is run, and goes to the /scrape path of the host, the scrape is complete. Then articles will show with title and images (descriptions are not provided on the Huffington Post website).  If you click on a link for an article, it will open in a new window, but you can go back to the article page and save a note about the article, which will save to the database and can be viewed again later.
